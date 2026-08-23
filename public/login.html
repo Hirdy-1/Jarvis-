@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jarvis Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-black text-white flex items-center justify-center min-h-screen">
+
+  <div class="bg-gray-900 p-8 rounded-xl w-full max-w-sm shadow-xl">
+    <h1 class="text-3xl font-bold mb-6 text-center">Jarvis Login</h1>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Email"
+      class="w-full mb-4 px-3 py-2 rounded bg-gray-800"
+    />
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+      class="w-full mb-6 px-3 py-2 rounded bg-gray-800"
+    />
+
+    <button
+      id="btn-login"
+      class="w-full bg-blue-600 py-2 rounded font-semibold"
+    >
+      Login
+    </button>
+
+    <p id="error" class="text-red-400 text-sm mt-4 hidden"></p>
+  </div>
+
+  <script type="module">
+    import { login } from "/src/auth.js";
+
+    const btn = document.getElementById("btn-login");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const error = document.getElementById("error");
+
+    btn.addEventListener("click", async () => {
+      error.classList.add("hidden");
+      try {
+        await login(email.value, password.value);
+        window.location.href = "/index.html"; // go to dashboard
+      } catch (err) {
+        error.textContent = err.message;
+        error.classList.remove("hidden");
+      }
+    });
+  </script>
+
+</body>
+</html>
